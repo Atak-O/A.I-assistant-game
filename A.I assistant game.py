@@ -6,232 +6,226 @@
 import time
 import random
 
-# Küçültme/normalize yardımcısı (Türkçe için güvenli)
+# Normalize helper (safe for Turkish inputs too)
 def norm(s: str) -> str:
     return " ".join(s.strip().casefold().split())
 
-# Giriş yapma sistemi:
+# Login system:
 # --------------------
-def giris_yap():
-    print("Sistem başlatılıyor...")
+def login():
+    print("System is starting...")
     time.sleep(1.2)
 
-    kullanici_adi = input("Lütfen kullanıcı adınızı yazınız: ")
-    print("Kullanıcı adı kontrol ediliyor, lütfen bekleyiniz...")
+    username = input("Please enter your username: ")
+    print("Checking username, please wait...")
     time.sleep(1)
-
-    if kullanici_adi == "Atakan":
-        print("✅ Kullanıcı adı doğru girildi.")
+    # Change Your_Name to the name you want.
+    if username == "Your_Name":
+        print("✅ Username is correct.")
         time.sleep(0.5)
 
-        parola = input("Lütfen parolayı giriniz: ")
-        print("Parola kontrol ediliyor, lütfen bekleyiniz...")
+        password = input("Please enter the password: ")
+        print("Checking password, please wait...")
         time.sleep(1)
-
-        if parola == "141214":
-            print("✅ Parola doğru girildi.")
+        # Change Your_password to the password you want.
+        if password == "Your_password":
+            print("✅ Password is correct.")
             time.sleep(0.5)
             return True
         else:
-            print("❌ Parola yanlış girildi.")
-            parola = input("Lütfen parolayı tekrar giriniz: ")
-            print("Parola tekrar kontrol ediliyor, lütfen bekleyiniz...")
+            print("❌ Wrong password.")
+            password = input("Please try again: ")
+            print("Checking again, please wait...")
             time.sleep(1)
-            if parola == "141214":
-                print("✅ Parola doğru girildi.")
+            if password == "141214":
+                print("✅ Password is correct.")
                 time.sleep(0.5)
                 return True
             else:
-                print("❌ Parola yine yanlış girildi. Giriş başarısız.")
+                print("❌ Wrong again. Login failed.")
                 return False
     else:
-        print("❌ Kullanıcı adı yanlış girildi.")
-        print("Sistem kapanıyor...")
+        print("❌ Wrong username.")
+        print("System shutting down...")
         time.sleep(1)
         return False
 
-# Kapı oyunu komutu:
+# Door game command:
 # --------------------
-def kapı_oyunu():
-    print("🎮 Kapı oyunu başlatılıyor...")
+def door_game():
+    print("🎮 Door game starting...")
     time.sleep(0.8)
-    print("Eğer kapıyı açtığında bir dinozor varsa 40 puan, eşek sürüsü varsa 30 puan ve ev varsa 100 puan.")
-    kapi = norm(input("Lütfen bir kapı seçiniz! (1/2/3): "))
+    print("If you find a dinosaur → 40 points, a herd of donkeys → 30 points, and a house → 100 points.")
+    door = norm(input("Please choose a door! (1/2/3): "))
 
-    if kapi == "1":
-        print("🟥 Kırmızı kapıyı açtın ve bir dinozor ile karşılaştın. 🦖 Kaçabildin mi acaba?")
-    elif kapi == "2":
-        print("🟩 Yeşil kapıyı açtın ve bir eşek sürüsüyle karşılaştın. 😅 Seslerinden kulakların çınlıyor!")
-    elif kapi == "3":
-        print("🟦 Mavi kapıyı açtın ve güzel mi güzel evine ulaştın! 🏡 Artık şöminenin karşısına geçip güzelce dinlenebilirsin.")
+    if door == "1":
+        print("🟥 You opened the red door and met a dinosaur. 🦖 Could you escape?")
+    elif door == "2":
+        print("🟩 You opened the green door and found a herd of donkeys. 😅 Your ears are ringing!")
+    elif door == "3":
+        print("🟦 You opened the blue door and reached your cozy house! 🏡 Time to relax by the fireplace.")
     else:
-        print("🚫 Geçersiz seçim. Lütfen 1, 2 veya 3 girin.")
+        print("🚫 Invalid choice. Please enter 1, 2, or 3.")
 
-# Çoklu bilmece:
+# Multiple riddles:
 # -----------------
-def bilmece():
-    bilmeceler = [
-        {"soru": "🧠 Bilgi verir herkese! En güzel dosttur bize! Cevap nedir?", "cevaplar": {"kitap", "book"}},
-        {"soru": "🧩 Hep ileri yürürüm, asla geri dönmem. Ben neyim?", "cevaplar": {"zaman", "time"}},
-        {"soru": "✨ Ne kadar alırsan o kadar büyür. Nedir?", "cevaplar": {"delik", "hole"}},
-        {"soru": "🌙 Gündüz görünmem, gece parlarım. Ben neyim?", "cevaplar": {"ay", "moon"}},
+def riddle():
+    riddles = [
+        {"q": "🧠 Gives knowledge to everyone! Our best friend! What is it?", "answers": {"book", "kitap"}},
+        {"q": "🧩 I always move forward, never go back. What am I?", "answers": {"time", "zaman"}},
+        {"q": "✨ The more you take, the bigger it gets. What is it?", "answers": {"hole", "delik"}},
+        {"q": "🌙 You can’t see me in the day, I shine at night. What am I?", "answers": {"moon", "ay"}},
     ]
-    soru = random.choice(bilmeceler)
-    user = norm(input(soru["soru"] + " "))
-    if user in soru["cevaplar"]:
-        print("✅ Doğru cevap! Aferin! 😎")
+    q = random.choice(riddles)
+    user = norm(input(q["q"] + " "))
+    if user in q["answers"]:
+        print("✅ Correct answer! Well done! 😎")
     else:
-        dogru = "/".join(sorted(soru["cevaplar"]))
-        print(f"❌ Yanlış cevap. Doğrusu: {dogru}")
+        correct = "/".join(sorted(q["answers"]))
+        print(f"❌ Wrong. The correct answer was: {correct}")
 
-# Departman seçimi
+# Department selection
 # -------------------
-def departman_secimi():
-    q = norm(input("Kodlama, çizim veya test - bunlardan en çok hangisini seviyorsunuz? "))
-    if q == "kodlama":
-        print("👩‍💻 Geliştirme departmanına hoş geldiniz!")
-    elif q in {"çizim", "cizim"}:
-        print("🎨 Tasarım departmanına hoş geldiniz!")
-    elif q == "test":
-        print("🧪 Kalite kontrol departmanına hoş geldiniz!")
+def department_selection():
+    q = norm(input("Which one do you like the most: coding, drawing, or testing? "))
+    if q == "coding":
+        print("👩‍💻 Welcome to the Development Department!")
+    elif q in {"drawing", "çizim", "cizim"}:
+        print("🎨 Welcome to the Design Department!")
+    elif q == "testing":
+        print("🧪 Welcome to the Quality Control Department!")
     else:
-        print("🙃 Maalesef size sunabileceğimiz bir departman yok.")
+        print("🙃 Sorry, we don’t have a department for you.")
 
-# Oyun önerisi komutu:
+# Game recommendation:
 # -------------------
-def oyun_önerisi():
-    q1 = norm(input("En sevdiğiniz oyun türü nedir? (yarış oyunu, dövüş oyunu, nişancı oyunu): "))
-    q2 = norm(input("Arkadaşlarınız ile oyun oynamayı sever misiniz? (evet/hayır): "))
+def game_suggestion():
+    q1 = norm(input("What is your favorite game type? (racing, fighting, shooter): "))
+    q2 = norm(input("Do you like playing with friends? (yes/no): "))
 
-    if q1 == "dövüş oyunu" and q2 == "evet":
-        print("Street Fighter oynamayı çok seversiniz.")
-    elif q1 == "dövüş oyunu" and q2 == "hayır":
-        print("Maalesef önerebileceğimiz bir oyun yok ):")
-    elif q1 == "yarış oyunu" and q2 == "evet":
-        print("Cars 3: Driven To Win oynamayı çok seveceksiniz!")
-    elif q1 == "yarış oyunu" and q2 == "hayır":
-        print("Assetto Corsa oynamayı çok seveceksiniz!")
-    elif q1 == "nişancı oyunu" and q2 == "evet":
-        print("Call of Duty oynamayı çok seveceksiniz!")
-    elif q1 == "nişancı oyunu" and q2 == "hayır":
-        print("Rainbow Six Siege oynamayı çok seveceksiniz!")
+    if q1 == "fighting" and q2 == "yes":
+        print("You will love playing Street Fighter.")
+    elif q1 == "fighting" and q2 == "no":
+        print("Sorry, no recommendations ):")
+    elif q1 == "racing" and q2 == "yes":
+        print("You will love Cars 3: Driven To Win!")
+    elif q1 == "racing" and q2 == "no":
+        print("You will love Assetto Corsa!")
+    elif q1 == "shooter" and q2 == "yes":
+        print("You will love Call of Duty!")
+    elif q1 == "shooter" and q2 == "no":
+        print("You will love Rainbow Six Siege!")
     else:
-        print("Maalesef önerebileceğimiz bir oyun yok!")
+        print("Sorry, no game suggestions!")
 
-# Stajyer testi komutu:
+# Intern test:
 # -------------------
-def stajyer_testi():
-    print("📝 Stajyer testi başladı!")
-    print("Seviyeni seç: 'başlangıç', 'orta', 'ileri'")
-    python_seviyesi = norm(input("Ne kadar Python bilgin var? "))
+def intern_test():
+    print("📝 Intern test started!")
+    print("Choose your level: 'beginner', 'intermediate', 'advanced'")
+    python_level = norm(input("How much Python do you know? "))
 
-    if python_seviyesi in {"orta", "ileri"}:
-        print("✅ Hoş geldin stajyer! Şimdi minik bir Python quiz'i başlıyor...")
+    if python_level in {"intermediate", "advanced"}:
+        print("✅ Welcome intern! Now a mini Python quiz begins...")
         time.sleep(1)
 
-        sorular = [
-            {"soru": "1) Turtle'da çizimi durdurmak için hangisi?\nA) t.pendown()  B) t.penup()  C) t.goto()", "cevap": "b"},
-            {"soru": "2) Aşağıdakilerden hangisi bir Python veri tipidir?\nA) int  B) fast  C) speed", "cevap": "a"},
-            {"soru": "3) 'print()' fonksiyonu ne işe yarar?\nA) Uzunluğu döndürür  B) Yazıyı küçültür  C) Ekrana yazı yazar", "cevap": "c"},
+        questions = [
+            {"q": "1) Which stops drawing in Turtle?\nA) t.pendown()  B) t.penup()  C) t.goto()", "a": "b"},
+            {"q": "2) Which one is a Python data type?\nA) int  B) fast  C) speed", "a": "a"},
+            {"q": "3) What does 'print()' do?\nA) Returns length  B) Makes text lowercase  C) Prints text", "a": "c"},
         ]
 
-        dogru_sayisi = 0
-        for s in sorular:
-            cevap = norm(input(s["soru"] + " "))
-            if cevap == s["cevap"]:
-                print("✅ Doğru!")
-                dogru_sayisi += 1
+        correct_count = 0
+        for s in questions:
+            ans = norm(input(s["q"] + " "))
+            if ans == s["a"]:
+                print("✅ Correct!")
+                correct_count += 1
             else:
-                print("❌ Yanlış cevap!")
+                print("❌ Wrong!")
 
-        print(f"📊 Test bitti! {dogru_sayisi}/{len(sorular)} doğru yaptın.")
+        print(f"📊 Test finished! You got {correct_count}/{len(questions)} correct.")
 
-        if dogru_sayisi == len(sorular):
-            print("🎉 Tebrikler! Tüm soruları doğru bildin, gerçekten iyi bir seviyedesin!")
+        if correct_count == len(questions):
+            print("🎉 Congratulations! Perfect score, your level is really good!")
         else:
-            print("😅 İdare eder ama daha çalışmalısın!")
-    elif python_seviyesi in {"başlangıç", "baslangic"}:
-        print("❌ Üzgünüz, koşulları karşılamıyorsunuz 😕")
+            print("😅 Not bad, but you should study more!")
+    elif python_level == "beginner":
+        print("❌ Sorry, you don’t meet the requirements 😕")
     else:
-        print("🚫 Anlamadım, lütfen 'başlangıç', 'orta' veya 'ileri' yaz.")
+        print("🚫 Didn’t understand, please write 'beginner', 'intermediate', or 'advanced'.")
 
-# Yardım komutu:
+# Help command:
 # -------------------
-def yardım():
-    print("Komut listesi yükleniyor...")
+def help_menu():
+    print("Loading command list...")
     time.sleep(0.6)
     print(
-        "\nKomutlar:\n"
-        " • kapı oyunu           : Bir kapı seçme oyunu başlatır.\n"
-        " • stajyer testi        : Seviyeye göre mini Python testi.\n"
-        " • bilmece              : Rastgele bilmeceler sorar.\n"
-        " • oyun önerisi         : Tercihlere göre oyun önerir.\n"
-        " • departman            : Sana uygun departmanı önerir.\n"
-        " • yazı tura            : Yazı–tura atar.\n"
-        " • yardım               : Bu menüyü gösterir.\n"
-        " • çıkış                : Programı kapatır.\n"
+        "\nCommands:\n"
+        " • door game        : Starts a door choosing game.\n"
+        " • intern test      : Mini Python test by level.\n"
+        " • riddle           : Asks random riddles.\n"
+        " • game suggestion  : Suggests a game based on your choices.\n"
+        " • department       : Suggests a department for you.\n"
+        " • coin toss        : Flips a coin.\n"
+        " • help             : Shows this menu.\n"
+        " • exit             : Closes the program.\n"
     )
 
-# --- YAZI–TURA ENTEGRASYONU ---
-def yazi_tura(atim_sayisi: int = 1):
-    """Yazı–tura atar. atim_sayisi > 1 ise ardışık birden fazla atım yapar."""
-    print("🪙 Para havaya fırlatılıyor...")
+# --- COIN TOSS ---
+def coin_toss(flips: int = 1):
+    """Flips a coin. If flips > 1, tosses multiple times."""
+    print("🪙 Flipping the coin...")
     time.sleep(0.6)
-    sonuclar = []
-    for _ in range(max(1, int(atim_sayisi))):
-        sonuclar.append(random.choice(["Yazı", "Tura"]))
+    results = []
+    for _ in range(max(1, int(flips))):
+        results.append(random.choice(["Heads", "Tails"]))
         time.sleep(0.2)
-    if len(sonuclar) == 1:
-        print("Sonuç:", sonuclar[0])
+    if len(results) == 1:
+        print("Result:", results[0])
     else:
-        print("Sonuçlar:", ", ".join(sonuclar))
-        print(f"Özet → Yazı: {sonuclar.count('Yazı')} | Tura: {sonuclar.count('Tura')}")
+        print("Results:", ", ".join(results))
+        print(f"Summary → Heads: {results.count('Heads')} | Tails: {results.count('Tails')}")
 
-
-
-# --- ANA DÖNGÜ ---
+# --- MAIN LOOP ---
 def main():
-    if giris_yap():
-        print("🧠 Hoş geldiniz efendim, size nasıl yardımcı olabilirim?")
+    if login():
+        print("🧠 Welcome, how can I assist you?")
         while True:
-            raw = input("Komut girin (yardım için 'yardım', çıkmak için 'çıkış'): ")
+            raw = input("Enter command (type 'help' for commands, 'exit' to quit): ")
             command = norm(raw)
 
-            # Komut eşlemeleri (takma adlar)
-            if command in {"kapı oyunu", "kapi oyunu"}:
-                kapı_oyunu()
-            elif command == "bilmece":
-                print("Bilmece yükleniyor, lütfen bekleyiniz...")
+            if command in {"door game"}:
+                door_game()
+            elif command == "riddle":
+                print("Loading riddle, please wait...")
                 time.sleep(0.5)
-                bilmece()
-            elif command == "stajyer testi":
-                print("Stajyer testi başlıyor, lütfen bekleyiniz...")
+                riddle()
+            elif command == "intern test":
+                print("Intern test loading, please wait...")
                 time.sleep(0.5)
-                stajyer_testi()
-            elif command == "oyun önerisi":
-                print("Oyun önerisi programı başlıyor, lütfen bekleyiniz...")
+                intern_test()
+            elif command == "game suggestion":
+                print("Loading game suggestion, please wait...")
                 time.sleep(0.5)
-                oyun_önerisi()
-            elif command == "yardım":
-                yardım()
-            
-            elif command in {"yazı tura", "yazi tura", "yazı-tura", "tura"}:
-                # Kullanıcı "yazı tura 3" gibi atım sayısı verirse yakala
+                game_suggestion()
+            elif command == "help":
+                help_menu()
+            elif command in {"coin toss", "flip", "toss"}:
                 parts = raw.strip().split()
-                # sayı son parçada olabilir: yazı tura 3
-                atim = 1
+                flips = 1
                 if parts and parts[-1].isdigit():
-                    atim = int(parts[-1])
-                yazi_tura(atim_sayisi=atim)
-            elif command == "departman":
-                departman_secimi()
-            elif command in {"çıkış", "cikis"}:
-                print("Program kapanıyor... Görüşürüz!")
+                    flips = int(parts[-1])
+                coin_toss(flips=flips)
+            elif command == "department":
+                department_selection()
+            elif command in {"exit", "quit"}:
+                print("Shutting down... Goodbye!")
                 break
             else:
-                print("🚫 Geçersiz komut. 'yardım' yazarak komutları görebilirsiniz.")
+                print("🚫 Invalid command. Type 'help' to see available commands.")
     else:
-        print("Giriş yapılamadı. Program kapanıyor...")
+        print("Login failed. Shutting down...")
 
 if __name__ == "__main__":
     main()
